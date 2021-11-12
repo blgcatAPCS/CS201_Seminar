@@ -2,33 +2,33 @@
 #define DECORATOR_H_
 
 #include <iostream>
-#include <string>
 
 using namespace std;
 
 class Component{
 public:
-    virtual ~Component();
-    virtual string doSomething() const = 0;
+    virtual ~Component()=0;
+    virtual void execute() const = 0;
 };
 
 class ConcreteComponent : public Component{ // "is a" relationship
 public:
-    string doSomething() const override;
+    void execute() const;
 };
 
-class Decorator : public Component{ // "is a" relationship
+class BaseDecorator : public Component{ // "is a" relationship
 private:
-    Component *comp; //"has a" relationship
+    Component *wrappee; //"has a" relationship
 public:
-    Decorator(Component *c);
-    string doSomething() const override;
+    BaseDecorator(Component *Wrappee);
+    void execute() const;
 };
 
-class ConcreteDecorator : public Decorator{
+class ConcreteDecorator : public BaseDecorator{
 public:
-    ConcreteDecorator(Component *comp);
-    string doSomething() const override;
+    ConcreteDecorator(Component *wrappee);
+    void execute() const;
+    void extra();
 };
 
 #endif

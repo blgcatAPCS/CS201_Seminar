@@ -2,22 +2,23 @@
 
 using namespace std;
 
-Component::~Component(){}
+Component::~Component(){};
 
-string ConcreteComponent::doSomething() const{
-    return "Called doSomething of ConcreteComponent.\n";
+void ConcreteComponent::execute() const{
+    cout << "Called execute of ConcreteComponent.\n";
 }
 
-Decorator::Decorator(Component *c){
-    comp=c;
+BaseDecorator::BaseDecorator(Component *Wrappee){
+    wrappee = Wrappee;
 }
 
-string Decorator::doSomething() const{
-    return comp->doSomething();
+void BaseDecorator::execute() const{
+    wrappee->execute();
 }
 
-ConcreteDecorator::ConcreteDecorator(Component *comp) : Decorator(comp){}
+ConcreteDecorator::ConcreteDecorator(Component *comp) : BaseDecorator(comp){}
 
-string ConcreteDecorator::doSomething() const{
-    return "Called doSomething of ConcreteDecorator\n" + Decorator::doSomething();
+void ConcreteDecorator::execute() const{
+    cout << "Called execute of ConcreteDecorator\n";
+    BaseDecorator::execute();
 }
